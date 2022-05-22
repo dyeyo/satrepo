@@ -24,6 +24,5 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoDocumentoSeed::class);
         $this->call(TipoEntrgaSeed::class);
         $this->call(TipoPlanesSeed::class);
-        $this->call(TipoPlanesSeed::class);
     }
 }

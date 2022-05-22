@@ -17,9 +17,9 @@ use App\Http\Controllers\parametros\PeriodoController;
 use App\Http\Controllers\parametros\SedesController;
 use App\Http\Controllers\parametros\TipoDocumentoController;
 use App\Http\Controllers\parametros\TipoEntregaController;
+use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\parametros\TipoPersonaController;
 use App\Http\Controllers\parametros\TipoPlanController;
-use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\VinculacionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -180,7 +180,6 @@ Route::delete('/persona/{id}', [PersonaController::class, 'destroy'])->name('per
 
 //-USUARIOS
 Route::get('/usuarios', [PersonaController::class, 'getUsuario'])->name('persona.usuarios');
-// });
 
 //-VINCUALCION
 Route::get('/vinculacion/{id}', [VinculacionController::class, 'index'])->name('vinculacion.index');
