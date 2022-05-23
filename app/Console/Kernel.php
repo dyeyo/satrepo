@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new SettlementJob)->monthlyOn(4, '15:00');
+        // $schedule->command('inspire')->hourly();
+        $schedule->job(new SettlementJob)->monthlyOn(30, '12:00');
     }
 
     /**
