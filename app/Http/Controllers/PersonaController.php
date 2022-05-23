@@ -38,169 +38,169 @@ class PersonaController extends Controller
         $usuario = $request->usu_codigo;
         $tecnico = $request->tec_codigo;
 
-        if ($cliente) {
-            $validator = Validator::make($request->all(), [
-                'per_nombre1' => 'required',
-                'per_nombre2' => 'required',
-                'per_apellido1' => 'required',
-                'per_apellido2' => 'required',
-                'per_identificacion' => 'required',
-                'per_email' => 'required|email|unique:personas',
-                'per_direccion' => 'required',
-                //TODO: VER COMO GUARDAMOS EL TELEFONO
-                // 'per_telefono' => 'required',
-                'per_digito' => 'required',
-                'per_fecha_nacimiento' => 'required',
-                // 'est_codigo' => 'required',
-                // 'tpe_codigo' => 'required',
-                // 'tdo_codigo' => 'required',
-                // 'per_mun_nacimiento' => 'required',
-                'cli_usuario' => 'required|unique:clientes',
-                'cli_clave' => 'required|min:5'
-            ], [
-                'per_nombre1.required' => 'Nombre1 es obligatorio',
-                'per_nombre2.required' => 'Nombre2 es obligatorio',
-                'per_apellido1.required' => 'Apellido1 es obligatorio',
-                'per_apellido2.required' => 'Apellido2 es obligatorio',
-                'per_identificacion.required' => 'Identificacion es obligatorio',
-                'per_email.required' => 'Email es obligatorio',
-                'per_email.email' => 'Email no tiene el formato permitido',
-                'per_direccion.required' => 'Direccion es obligatorio',
-                // 'per_telefono.required' => 'Telefono es obligatorio',
-                'per_digito.required' => 'Digito es obligatorio',
-                'per_fecha_nacimiento.required' => 'fecha_nacimiento es obligatorio',
-                // 'est_codigo.required' => 'Estratos es obligatorio',
-                // 'tpe_codigo.required' => 'Tipo Personas es obligatorio',
-                // 'tdo_codigo.required' => 'Tipo Documentos coes obligatoriodigo',
-                // 'per_mun_nacimiento.required' => 'Municipios es obligatorio',
-                'cli_usuario.required'  => 'Usuario es obligatorio',
-                'cli_clave.required' => 'Clave es obligatorio',
-                'cli_clave.min' => 'Clave debe tener minimo 5 caracrteeres',
+        // if ($cliente) {
+        //     $validator = Validator::make($request->all(), [
+        //         'per_nombre1' => 'required',
+        //         'per_nombre2' => 'required',
+        //         'per_apellido1' => 'required',
+        //         'per_apellido2' => 'required',
+        //         'per_identificacion' => 'required',
+        //         'per_email' => 'required|email|unique:personas',
+        //         'per_direccion' => 'required',
+        //         //TODO: VER COMO GUARDAMOS EL TELEFONO
+        //         // 'per_telefono' => 'required',
+        //         'per_digito' => 'required',
+        //         'per_fecha_nacimiento' => 'required',
+        //         // 'est_codigo' => 'required',
+        //         // 'tpe_codigo' => 'required',
+        //         // 'tdo_codigo' => 'required',
+        //         // 'per_mun_nacimiento' => 'required',
+        //         'cli_usuario' => 'required|unique:clientes',
+        //         'cli_clave' => 'required|min:5'
+        //     ], [
+        //         'per_nombre1.required' => 'Nombre1 es obligatorio',
+        //         'per_nombre2.required' => 'Nombre2 es obligatorio',
+        //         'per_apellido1.required' => 'Apellido1 es obligatorio',
+        //         'per_apellido2.required' => 'Apellido2 es obligatorio',
+        //         'per_identificacion.required' => 'Identificacion es obligatorio',
+        //         'per_email.required' => 'Email es obligatorio',
+        //         'per_email.email' => 'Email no tiene el formato permitido',
+        //         'per_direccion.required' => 'Direccion es obligatorio',
+        //         // 'per_telefono.required' => 'Telefono es obligatorio',
+        //         'per_digito.required' => 'Digito es obligatorio',
+        //         'per_fecha_nacimiento.required' => 'fecha_nacimiento es obligatorio',
+        //         // 'est_codigo.required' => 'Estratos es obligatorio',
+        //         // 'tpe_codigo.required' => 'Tipo Personas es obligatorio',
+        //         // 'tdo_codigo.required' => 'Tipo Documentos coes obligatoriodigo',
+        //         // 'per_mun_nacimiento.required' => 'Municipios es obligatorio',
+        //         'cli_usuario.required'  => 'Usuario es obligatorio',
+        //         'cli_clave.required' => 'Clave es obligatorio',
+        //         'cli_clave.min' => 'Clave debe tener minimo 5 caracrteeres',
 
-            ]);
-        }
-        if ($usuario) {
-            $validator = Validator::make($request->all(), [
-                'per_nombre1' => 'required',
-                'per_nombre2' => 'required',
-                'per_apellido1' => 'required',
-                'per_apellido2' => 'required',
-                'per_identificacion' => 'required',
-                'per_email' => 'required|email|unique:personas',
-                'per_direccion' => 'required',
-                'per_telefono' => 'required',
-                'per_digito' => 'required',
-                'per_fecha_nacimiento' => 'required',
-                // 'est_codigo' => 'required',
-                // 'tpe_codigo' => 'required',
-                // 'tdo_codigo' => 'required',
-                // 'per_mun_nacimiento' => 'required',
-                'usu_usuario' => 'required|unique:usuarios',
-                'usu_clave' => 'required|min:5',
-            ], [
-                'per_nombre1.required' => 'Nombre1 es obligatorio',
-                'per_nombre2.required' => 'Nombre2 es obligatorio',
-                'per_apellido1.required' => 'Apellido1 es obligatorio',
-                'per_apellido2.required' => 'Apellido2 es obligatorio',
-                'per_identificacion.required' => 'Identificacion es obligatorio',
-                'per_email.required' => 'Email es obligatorio',
-                'per_email.email' => 'Email no tiene el formato permitido',
-                'per_direccion.required' => 'Direccion es obligatorio',
-                'per_telefono.required' => 'Telefono es obligatorio',
-                'per_digito.required' => 'Digito es obligatorio',
-                'per_fecha_nacimiento.required' => 'fecha_nacimiento es obligatorio',
-                // 'est_codigo.required' => 'Estratos es obligatorio',
-                // 'tpe_codigo.required' => 'Tipo Personas es obligatorio',
-                // 'tdo_codigo.required' => 'Tipo Documentos coes obligatoriodigo',
-                // 'per_mun_nacimiento.required' => 'Municipios es obligatorio',
-                'usu_usuario.required'  => 'Usuario es obligatorio',
-                'usu_clave.required' => 'Clave es obligatorio',
-                'usu_clave.min' => 'Clave debe tener minimo 5 caracrteeres',
-            ]);
-        }
-        if ($tecnico) {
-            $validator = Validator::make($request->all(), [
-                'per_nombre1' => 'required',
-                'per_nombre2' => 'required',
-                'per_apellido1' => 'required',
-                'per_apellido2' => 'required',
-                'per_identificacion' => 'required',
-                'per_email' => 'required|email|unique:personas',
-                'per_direccion' => 'required',
-                'per_telefono' => 'required',
-                'per_digito' => 'required',
-                'per_fecha_nacimiento' => 'required',
-                // 'est_codigo' => 'required',
-                // 'tpe_codigo' => 'required',
-                // 'tdo_codigo' => 'required',
-                // 'per_mun_nacimiento' => 'required',
-                'tec_fecha_ingreso' => 'required',
-            ], [
-                'per_nombre1.required' => 'Nombre1 es obligatorio',
-                'per_nombre2.required' => 'Nombre2 es obligatorio',
-                'per_apellido1.required' => 'Apellido1 es obligatorio',
-                'per_apellido2.required' => 'Apellido2 es obligatorio',
-                'per_identificacion.required' => 'Identificacion es obligatorio',
-                'per_email.required' => 'Email es obligatorio',
-                'per_email.email' => 'Email no tiene el formato permitido',
-                'per_direccion.required' => 'Direccion es obligatorio',
-                'per_telefono.required' => 'Telefono es obligatorio',
-                'per_digito.required' => 'Digito es obligatorio',
-                'per_fecha_nacimiento.required' => 'fecha_nacimiento es obligatorio',
-                // 'est_codigo.required' => 'Estratos es obligatorio',
-                // 'tpe_codigo.required' => 'Tipo Personas es obligatorio',
-                // 'tdo_codigo.required' => 'Tipo Documentos coes obligatoriodigo',
-                // 'per_mun_nacimiento.required' => 'Municipios es obligatorio',
-                'tec_fecha_ingreso.required'  => 'Fecha es obligatorio',
-            ]);
-        }
-        if ($validator->fails()) {
-            return response()->json(
-                [
-                    'code' => 400,
-                    'errors' => $validator->errors()
-                ]
-            );
-        } else {
-            $persona = Persona::create($request->all());
-            if ($persona) {
-                // validar si es usuario o cliente
-                if ($cliente) {
-                    $this->storeCliente($persona->id, $request);
-                    return response()->json(
-                        [
-                            'message' => 'Cliente registrado exitosamente!',
-                            'code' => 200
-                        ]
-                    );
-                }
-                if ($usuario) {
-                    $this->storeUsuario($persona->id, $request);
-                    return response()->json(
-                        [
-                            'message' => 'Usuario registrado exitosamente!',
-                            'code' => 200
-                        ]
-                    );
-                }
-                if ($tecnico) {
-                    $this->storeTecnico($persona->id, $request);
-                    return response()->json(
-                        [
-                            'message' => 'Tecnico registrado exitosamente!',
-                            'code' => 200
-                        ]
-                    );
-                }
-            } else {
+        //     ]);
+        // }
+        // if ($usuario) {
+        //     $validator = Validator::make($request->all(), [
+        //         'per_nombre1' => 'required',
+        //         'per_nombre2' => 'required',
+        //         'per_apellido1' => 'required',
+        //         'per_apellido2' => 'required',
+        //         'per_identificacion' => 'required',
+        //         'per_email' => 'required|email|unique:personas',
+        //         'per_direccion' => 'required',
+        //         'per_telefono' => 'required',
+        //         'per_digito' => 'required',
+        //         'per_fecha_nacimiento' => 'required',
+        //         // 'est_codigo' => 'required',
+        //         // 'tpe_codigo' => 'required',
+        //         // 'tdo_codigo' => 'required',
+        //         // 'per_mun_nacimiento' => 'required',
+        //         'usu_usuario' => 'required|unique:usuarios',
+        //         'usu_clave' => 'required|min:5',
+        //     ], [
+        //         'per_nombre1.required' => 'Nombre1 es obligatorio',
+        //         'per_nombre2.required' => 'Nombre2 es obligatorio',
+        //         'per_apellido1.required' => 'Apellido1 es obligatorio',
+        //         'per_apellido2.required' => 'Apellido2 es obligatorio',
+        //         'per_identificacion.required' => 'Identificacion es obligatorio',
+        //         'per_email.required' => 'Email es obligatorio',
+        //         'per_email.email' => 'Email no tiene el formato permitido',
+        //         'per_direccion.required' => 'Direccion es obligatorio',
+        //         'per_telefono.required' => 'Telefono es obligatorio',
+        //         'per_digito.required' => 'Digito es obligatorio',
+        //         'per_fecha_nacimiento.required' => 'fecha_nacimiento es obligatorio',
+        //         // 'est_codigo.required' => 'Estratos es obligatorio',
+        //         // 'tpe_codigo.required' => 'Tipo Personas es obligatorio',
+        //         // 'tdo_codigo.required' => 'Tipo Documentos coes obligatoriodigo',
+        //         // 'per_mun_nacimiento.required' => 'Municipios es obligatorio',
+        //         'usu_usuario.required'  => 'Usuario es obligatorio',
+        //         'usu_clave.required' => 'Clave es obligatorio',
+        //         'usu_clave.min' => 'Clave debe tener minimo 5 caracrteeres',
+        //     ]);
+        // }
+        // if ($tecnico) {
+        //     $validator = Validator::make($request->all(), [
+        //         'per_nombre1' => 'required',
+        //         'per_nombre2' => 'required',
+        //         'per_apellido1' => 'required',
+        //         'per_apellido2' => 'required',
+        //         'per_identificacion' => 'required',
+        //         'per_email' => 'required|email|unique:personas',
+        //         'per_direccion' => 'required',
+        //         'per_telefono' => 'required',
+        //         'per_digito' => 'required',
+        //         'per_fecha_nacimiento' => 'required',
+        //         // 'est_codigo' => 'required',
+        //         // 'tpe_codigo' => 'required',
+        //         // 'tdo_codigo' => 'required',
+        //         // 'per_mun_nacimiento' => 'required',
+        //         'tec_fecha_ingreso' => 'required',
+        //     ], [
+        //         'per_nombre1.required' => 'Nombre1 es obligatorio',
+        //         'per_nombre2.required' => 'Nombre2 es obligatorio',
+        //         'per_apellido1.required' => 'Apellido1 es obligatorio',
+        //         'per_apellido2.required' => 'Apellido2 es obligatorio',
+        //         'per_identificacion.required' => 'Identificacion es obligatorio',
+        //         'per_email.required' => 'Email es obligatorio',
+        //         'per_email.email' => 'Email no tiene el formato permitido',
+        //         'per_direccion.required' => 'Direccion es obligatorio',
+        //         'per_telefono.required' => 'Telefono es obligatorio',
+        //         'per_digito.required' => 'Digito es obligatorio',
+        //         'per_fecha_nacimiento.required' => 'fecha_nacimiento es obligatorio',
+        //         // 'est_codigo.required' => 'Estratos es obligatorio',
+        //         // 'tpe_codigo.required' => 'Tipo Personas es obligatorio',
+        //         // 'tdo_codigo.required' => 'Tipo Documentos coes obligatoriodigo',
+        //         // 'per_mun_nacimiento.required' => 'Municipios es obligatorio',
+        //         'tec_fecha_ingreso.required'  => 'Fecha es obligatorio',
+        //     ]);
+        // }
+        // if ($validator->fails()) {
+        //     return response()->json(
+        //         [
+        //             'code' => 400,
+        //             'errors' => $validator->errors()
+        //         ]
+        //     );
+        // } else {
+        $persona = Persona::create($request->all());
+        if ($persona) {
+            // validar si es usuario o cliente
+            if ($cliente) {
+                $this->storeCliente($persona->id, $request);
                 return response()->json(
                     [
-                        'message' => 'Error al registrar el usuario!',
-                        'code' => 401
+                        'message' => 'Cliente registrado exitosamente!',
+                        'code' => 200
                     ]
                 );
             }
+            if ($usuario) {
+                $this->storeUsuario($persona->id, $request);
+                return response()->json(
+                    [
+                        'message' => 'Usuario registrado exitosamente!',
+                        'code' => 200
+                    ]
+                );
+            }
+            if ($tecnico) {
+                $this->storeTecnico($persona->id, $request);
+                return response()->json(
+                    [
+                        'message' => 'Tecnico registrado exitosamente!',
+                        'code' => 200
+                    ]
+                );
+            }
+        } else {
+            return response()->json(
+                [
+                    'message' => 'Error al registrar el usuario!',
+                    'code' => 401
+                ]
+            );
         }
+        // }
     }
 
     public function storeCliente($id, Request $request)
