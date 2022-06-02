@@ -16,6 +16,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class SettlementJob implements ShouldQueue
 {
@@ -37,23 +38,38 @@ class SettlementJob implements ShouldQueue
      */
     public function handle()
     {
-        $periodos = Periodo::all();
         $hoy = Carbon::now();
 
-        $inicio = $hoy->year . '-' . $hoy->month . '-01';
-        $fin = $hoy->year . '-' . $hoy->month . '-30';
-
-        $inscripciones = Inscripcion::with('oferta')->whereBetween('ins_fecha', [$inicio, $fin])->get();
-        $estado = Estado::first();
-        $perido = Periodo::where('prd_codigo', $hoy->month + 1)->first();
+        $perido = Periodo::where('prd_codigo', $hoy->month)->first();
 
         if ($perido) {
+            $inicio = $hoy->startOfMonth()->toDateString();
+            $fin = $hoy->endOfMonth()->toDateString();
+
+            $estado = Estado::first();
+            $inscripciones = Inscripcion::with('oferta')->whereBetween('ins_fecha', [$inicio, $fin])->get();
+
             foreach ($inscripciones as $inscripcion) {
 
-                $data = User::select('users.nameUser', 'categories.nameCategory')
-                    ->join('categories', 'users.idUser', '=', 'categories.user_id')
-                    ->get();
+                // $data = User::select('users.nameUser', 'categories.nameCategory')
+                //     ->join('categories', 'users.idUser', '=', 'categories.user_id')
+                //     ->get();
 
+                // El metodo firstOrCreate hace la consulta de si ya existe el registro con la condición del primer arreglo
+                // en caso de que exista solo hace la consulta, en caso de que no existe lo crea con los datos del segundo arreglo
+                $liquidacion = Liquidacion::firstOrCreate([
+                    'ins_codigo' => $inscripcion->id,
+                    'prod_codigo' => $perido->id,
+                ], [
+                    'liq_codigo' => null,
+                    'liq_dias' => (30 - $hoy->day) + 1,
+                    'liq_valor' => $inscripcion->oferta->ofe_valor,
+                    'tipo_creacion' => 1,
+                    'est_codigo' => $estado->id,
+                ]);
+                // Con esto puedes ver en el log (laravel.log) si esta consultado o creando con el valor wasRecentlyCreated
+                Log::debug($liquidacion);
+                Log::debug('Was recentyle created: ' . $liquidacion->wasRecentlyCreated);
 
                 // $liquidacionExiste = Liquidacion::select(
                 //     'liquidacions.liq_codigo',
@@ -73,15 +89,7 @@ class SettlementJob implements ShouldQueue
                 // ins_fecha_inicio
                 // $liquidacionExiste = Liquidacion::where('ins_codigo', $inscripcion->id)->where('prod_codigo', $perido->id)->count();
                 // if ($liquidacionExiste < 0) {
-                $liquidacion = Liquidacion::create([
-                    'liq_codigo' => null,
-                    'liq_dias' => (30 - $hoy->day) + 1,
-                    'liq_valor' => $inscripcion->oferta->ofe_valor,
-                    'ins_codigo' => $inscripcion->id,
-                    'tipo_creacion' => 1,
-                    'prod_codigo' => $perido->id,
-                    'est_codigo' => $estado->id,
-                ]);
+
                 // } else {
                 //     return;
                 // }
