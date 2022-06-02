@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new SettlementJob)->monthlyOn(4, '15:00');
+        // $schedule->job(new SettlementJob)->monthlyOn(4, '15:00');
+        $schedule->job(new SettlementJob)->everyMinute();
     }
 
     /**
@@ -26,7 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

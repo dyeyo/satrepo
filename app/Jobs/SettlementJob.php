@@ -28,7 +28,6 @@ class SettlementJob implements ShouldQueue
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -46,21 +45,47 @@ class SettlementJob implements ShouldQueue
 
         $inscripciones = Inscripcion::with('oferta')->whereBetween('ins_fecha', [$inicio, $fin])->get();
         $estado = Estado::first();
-        $perido = Periodo::where('id', $hoy->month)->first();
+        $perido = Periodo::where('prd_codigo', $hoy->month + 1)->first();
 
-        if($perido) {
-            foreach($inscripciones as $inscripcion) {
+        if ($perido) {
+            foreach ($inscripciones as $inscripcion) {
 
+                $data = User::select('users.nameUser', 'categories.nameCategory')
+                    ->join('categories', 'users.idUser', '=', 'categories.user_id')
+                    ->get();
+
+
+                // $liquidacionExiste = Liquidacion::select(
+                //     'liquidacions.liq_codigo',
+                //     'liquidacions.liq_dias',
+                //     'liquidacions.liq_valor',
+                //     'liquidacions.tipo_creacion',
+                //     'inscripcions.ins_codigo',
+                //     'inscripcions.ins_fecha',
+                //     'inscripcions.ins_fecha_inicio',
+                //     'inscripcions.ins_fecha_fin',
+                //     'inscripcions.ins_ip',
+                //     'inscripcions.ins_estado',
+                //     'inscripcions.ins_direccion'
+                // )
+                //     ->join('inscripcions', 'liquidacions.ins_codigo', '=', 'inscripcions.id')
+                //     ->where('inscripcions.ins_fecha_fin', '>',)->get();
+                // ins_fecha_inicio
+                // $liquidacionExiste = Liquidacion::where('ins_codigo', $inscripcion->id)->where('prod_codigo', $perido->id)->count();
+                // if ($liquidacionExiste < 0) {
                 $liquidacion = Liquidacion::create([
                     'liq_codigo' => null,
                     'liq_dias' => (30 - $hoy->day) + 1,
                     'liq_valor' => $inscripcion->oferta->ofe_valor,
                     'ins_codigo' => $inscripcion->id,
+                    'tipo_creacion' => 1,
                     'prod_codigo' => $perido->id,
                     'est_codigo' => $estado->id,
                 ]);
+                // } else {
+                //     return;
+                // }
             }
         }
-
     }
 }
